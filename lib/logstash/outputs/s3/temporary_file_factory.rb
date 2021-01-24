@@ -22,7 +22,8 @@ module LogStash
         GZIP_ENCODING = "gzip"
         GZIP_EXTENSION = "txt.gz"
         TXT_EXTENSION = "txt"
-        STRFTIME = "%Y-%m-%dT%H.%M"
+        #Edited
+        STRFTIME = "%Y%m%d_%H%M"
 
         attr_accessor :counter, :tags, :prefix, :encoding, :temporary_directory, :current
 
@@ -64,13 +65,8 @@ module LogStash
         end
 
         def generate_name
-          filename = "ls.s3.#{SecureRandom.uuid}.#{current_time}"
-
-          if tags.size > 0
-            "#{filename}.tag_#{tags.join('.')}.part#{counter}.#{extension}"
-          else
-            "#{filename}.part#{counter}.#{extension}"
-          end
+          ## Edited - does not support size rotation!
+          filename = "#{current_time}.#{extension}"
         end
 
         def new_file
