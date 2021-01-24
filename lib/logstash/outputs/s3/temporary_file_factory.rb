@@ -65,8 +65,8 @@ module LogStash
         end
 
         def generate_name
-          ## Edited - does not support size rotation!
-          filename = "#{current_time}.#{extension}"
+          filename = "#{current_time}"
+          "#{filename}.#{extension}"
         end
 
         def new_file
