@@ -42,20 +42,20 @@ module LogStash
 
         class FactoryInitializer
           include java.util.function.Function
-          def initialize(tags, encoding, temporary_directory, stale_time, time_file)
+          def initialize(tags, encoding, temporary_directory, stale_time, time_string)
             @tags = tags
             @encoding = encoding
             @temporary_directory = temporary_directory
             @stale_time = stale_time
-            @time_file = time_file
+            @time_string = time_string
           end
 
           def apply(prefix_key)
-            PrefixedValue.new(TemporaryFileFactory.new(prefix_key, @tags, @encoding, @temporary_directory, @time_file), @stale_time)
+            PrefixedValue.new(TemporaryFileFactory.new(prefix_key, @tags, @encoding, @temporary_directory, @time_string), @stale_time)
           end
         end
 
-        def initialize(tags, encoding, temporary_directory, time_file,
+        def initialize(tags, encoding, temporary_directory, time_string,
                        stale_time = DEFAULT_STALE_TIME_SECS,
                        sweeper_interval = DEFAULT_STATE_SWEEPER_INTERVAL_SECS)
           # The path need to contains the prefix so when we start
@@ -64,7 +64,7 @@ module LogStash
 
           @sweeper_interval = sweeper_interval
 
-          @factory_initializer = FactoryInitializer.new(tags, encoding, temporary_directory, stale_time, time_file)
+          @factory_initializer = FactoryInitializer.new(tags, encoding, temporary_directory, stale_time, time_string)
 
           start_stale_sweeper
         end
