@@ -23,7 +23,7 @@ module LogStash
         GZIP_EXTENSION = "txt.gz"
         TXT_EXTENSION = "txt"
         #Edited
-        STRFTIME = "%Y%m%d_%H%M"
+        STRFTIME = "%Y/%m/%d/%Y%m%d_%H%M"
 
         attr_accessor :counter, :tags, :prefix, :encoding, :temporary_directory, :current
 
