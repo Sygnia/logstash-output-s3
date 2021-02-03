@@ -215,7 +215,7 @@ class LogStash::Outputs::S3 < LogStash::Outputs::Base
       raise LogStash::ConfigurationError, "The S3 plugin must have at least one of time_file or size_file set to a value greater than 0"
     end
 
-    @file_repository = FileRepository.new(@tags, @encoding, @temporary_directory)
+    @file_repository = FileRepository.new(@tags, @encoding, @temporary_directory, @time_file)
 
     @rotation = rotation_strategy
 

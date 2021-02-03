@@ -24,13 +24,14 @@ module LogStash
         TXT_EXTENSION = "txt"
         #Edited
         STRFTIME = "%Y%m%d_%H%M"
+        STRFTIME_SECONDS = "%Y%m%d_%H%M%S"
 
         attr_accessor :counter, :tags, :prefix, :encoding, :temporary_directory, :current
 
-        def initialize(prefix, tags, encoding, temporary_directory)
+        def initialize(prefix, tags, encoding, temporary_directory, time_file)
           @counter = 0
           @prefix = prefix
-
+          @time_file = time_file
           @tags = tags
           @encoding = encoding
           @temporary_directory = temporary_directory
@@ -61,7 +62,11 @@ module LogStash
         end
 
         def current_time
-          Time.now.strftime(STRFTIME)
+          if @time_file >= 1
+            return Time.now.strftime(STRFTIME)
+          else
+            return Time.now.strftime(STRFTIME_SECONDS)
+          end
         end
 
         def generate_name
