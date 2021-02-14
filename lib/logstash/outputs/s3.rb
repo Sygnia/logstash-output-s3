@@ -193,6 +193,8 @@ class LogStash::Outputs::S3 < LogStash::Outputs::Base
   # The amount of time to wait in seconds before attempting to retry a failed upload.
   config :retry_delay, :validate => :number, :default => 1
 
+  config :time_string, :validate => :string, :default => "%Y%m%d_%H%M"
+
   def register
     # I've move the validation of the items into custom classes
     # to prepare for the new config validation that will be part of the core so the core can
@@ -215,7 +217,7 @@ class LogStash::Outputs::S3 < LogStash::Outputs::Base
       raise LogStash::ConfigurationError, "The S3 plugin must have at least one of time_file or size_file set to a value greater than 0"
     end
 
-    @file_repository = FileRepository.new(@tags, @encoding, @temporary_directory)
+    @file_repository = FileRepository.new(@tags, @encoding, @temporary_directory, @time_string)
 
     @rotation = rotation_strategy
 

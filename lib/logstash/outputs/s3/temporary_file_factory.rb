@@ -22,15 +22,13 @@ module LogStash
         GZIP_ENCODING = "gzip"
         GZIP_EXTENSION = "txt.gz"
         TXT_EXTENSION = "txt"
-        #Edited
-        STRFTIME = "%Y%m%d_%H%M"
 
         attr_accessor :counter, :tags, :prefix, :encoding, :temporary_directory, :current
 
-        def initialize(prefix, tags, encoding, temporary_directory)
+        def initialize(prefix, tags, encoding, temporary_directory, time_string)
           @counter = 0
           @prefix = prefix
-
+          @time_string = time_string
           @tags = tags
           @encoding = encoding
           @temporary_directory = temporary_directory
@@ -61,7 +59,7 @@ module LogStash
         end
 
         def current_time
-          Time.now.strftime(STRFTIME)
+          Time.now.strftime(@time_string)
         end
 
         def generate_name
